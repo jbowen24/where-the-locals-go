@@ -1,0 +1,163 @@
+
+<script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
+  <style>
+    #map{ width: 100%; height: 500px;}
+    #page #map img {max-width: none;}
+    /* unvisited link */
+  </style>
+  <style>
+/*
+ * These CSS rules affect the tooltips within maps with the custom-popup
+ * class. See the full CSS for all customizable options:
+ * https://github.com/mapbox/mapbox.js/blob/001754177f3985c0e6b4a26e3c869b0c66162c99/theme/style.css#L321-L366
+ */
+.custom-popup .leaflet-popup-content-wrapper {
+  background-color:#2c3e50;
+  color:#FFD700;
+  font-size:16px;
+  line-height:24px;
+  }
+.custom-popup .leaflet-popup-content-wrapper 
+a {
+  color:#FFD700;
+  text-decoration: underline;
+  }
+.custom-popup .leaflet-popup-tip-container {
+  width:30px;
+  height:15px;
+  }
+.custom-popup .leaflet-popup-tip {
+  border-left:15px solid transparent;
+  border-right:15px solid transparent;
+  border-top:15px solid #2c3e50;
+
+  }
+}
+</style>
+<div class='custom-popup' id="map"></div>
+
+<script>
+
+  // initialize the map
+L.mapbox.accessToken = 'pk.eyJ1IjoiamVsZGVyIiwiYSI6InpCTmhMdm8ifQ.lJcqxcME79NwtzwTNX2qNw';
+
+var info = document.getElementById('info');
+// set pan-zoom bounds
+var southWest = L.latLng(-180, -180),
+    northEast = L.latLng(180, 180),
+    bounds = L.latLngBounds(southWest, northEast);
+
+var map = L.mapbox.map('map', 'jelder.b4820ab5', {
+  maxBounds: bounds,
+  minZoom: 2,
+  maxZoom: 5,
+}).setView([40.5195, -22.3733], 2);      
+
+  
+  //disable scroll wheel
+map.scrollWheelZoom.disable();
+  var myLayer = L.mapbox.featureLayer().addTo(map);
+// load a pop up on entry
+var marker = L.mapbox.featureLayer({
+    type: 'Feature',
+    geometry: {
+        type: 'Point',
+        coordinates: [14.443126,50.085260]
+    },
+    properties: {
+        title: 'Click around to open each city!',
+        'marker-color': '#f86767'
+    }
+}).addTo(map);
+marker.eachLayer(function(m) {
+  m.openPopup();
+});
+
+// The GeoJSON representing the two point features
+var geojson = {
+    type: 'FeatureCollection',
+    features: [{
+        type: 'Feature',
+        properties: {
+            title: 'Check out <a target="_blank" href="http://www.nationalgeographic.com/travel/destinations/united-states/new-york/where-the-locals-go-your-shot-new-york-city">New York City, USA</a>!',
+            //description: '<a href="http://www.nationalgeographic.com/travel/destinations/united-states/new-york/where-the-locals-go-your-shot-new-york-city">New York City</a>',
+            'marker-color': '#FFD700',
+            'marker-size': 'large',
+            'marker-symbol': 'circle-stroked',
+            url: 'http://www.nationalgeographic.com/travel/destinations/united-states/new-york/where-the-locals-go-your-shot-new-york-city/'
+        },
+        geometry: {
+            type: 'Point',
+            coordinates: [-74.0059, 40.7128]
+        }
+    },
+    {
+        type: 'Feature',
+        properties: {
+            title: 'Check out <a target="_blank" href="http://www.nationalgeographic.com/travel/destinations/united-states/new-york/where-the-locals-go-your-shot-new-york-city">Buenos Aires, Argentina</a>!',
+            'marker-color': '#FFD700',
+            'marker-size': 'large',
+            'marker-symbol': 'circle-stroked',
+            url: 'http://www.nationalgeographic.com/travel/destinations/united-states/new-york/where-the-locals-go-your-shot-new-york-city/'
+        },
+        geometry: {
+            type: 'Point',
+            coordinates: [-58.380509,-34.637102]
+        }
+
+    },
+    {
+        type: 'Feature',
+        properties: {
+            title: 'Check out <a target="_blank" href="http://www.nationalgeographic.com/travel/destinations/united-states/new-york/where-the-locals-go-your-shot-new-york-city">Casablanca, Morocco</a>!',
+            'marker-color': '#FFD700',
+            'marker-size': 'large',
+            'marker-symbol': 'circle-stroked',
+            url: 'http://www.nationalgeographic.com/travel/destinations/united-states/new-york/where-the-locals-go-your-shot-new-york-city/'
+        },
+        geometry: {
+            type: 'Point',
+            coordinates: [-7.623097,33.586794]
+        }
+    },
+    {
+        type: 'Feature',
+        properties: {
+            title: 'Check out <a target="_blank" href="http://www.nationalgeographic.com/travel/destinations/united-states/new-york/where-the-locals-go-your-shot-new-york-city">Tokyo, Japan</a>!',
+            'marker-color': '#FFD700',
+            'marker-size': 'large',
+            'marker-symbol': 'circle-stroked',
+            url: 'http://www.nationalgeographic.com/travel/destinations/united-states/new-york/where-the-locals-go-your-shot-new-york-city/'
+        },
+        geometry: {
+            type: 'Point',
+            coordinates: [139.763908,35.690496]
+        }
+    },
+    {
+        type: 'Feature',
+        properties: {
+            title: 'Check out <a target="_blank" href="http://www.nationalgeographic.com/travel/destinations/united-states/new-york/where-the-locals-go-your-shot-new-york-city">Prague, Czech Republic</a>!',
+            'marker-color': '#FFD700',
+            'marker-size': 'large',
+            'marker-symbol': 'circle-stroked',
+            url: 'http://www.nationalgeographic.com/travel/destinations/europe/ireland/a-local-photographers-guide-to-donegal-ireland/'
+        },
+        geometry: {
+            type: 'Point',
+            coordinates: [14.443126,50.085260]
+        },
+
+    }]
+};
+
+// Pass features and a custom factory function to the map
+myLayer.setGeoJSON(geojson);
+// on click open each marker's url
+/*
+myLayer.on('click', function(e) {
+    window.open(e.layer.feature.properties.url);
+});
+*/
+  </script>
